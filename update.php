@@ -118,7 +118,7 @@ $stocks_array = array(
 $api_stocks = $stocks_array;
 
 ?>
-    <h4>Throw API</h4>
+    <h4>Получение данных через АПИ...</h4>
     <p>Золото: <?=$api_stocks["gold"]?></p>
     <p>Серебро: <?=$api_stocks["silver"]?></p>
     <p>Платина: <?=$api_stocks["platinum"]?></p>
@@ -133,10 +133,48 @@ $api_stocks = $stocks_array;
 /*Часть 3. Получаем данные парсингом*/
 include_once('simple_html_dom.php');
 //"https://www.kitco.com/gold.londonfix.html";
+
+
+if($api_stocks["gold"] < 3 || $api_stocks["silver"] < 3 || $api_stocks["platinum"] < 3 || $api_stocks["palladium"]< 3){
+
+    $context = stream_context_create(
+        array(
+            "http" => array(
+                "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+            )
+        )
+    );
+
+    $html = file_get_html('https://www.kitco.com/gold.londonfix.html', false, $context);
+
+    $stocks_array_parced = array(
+        "gold" => $html->find('#content div.lf_prices', 0)->find(' tr.even', 0)->find('td', 1)->plaintext,
+        "silver" => $html->find('#content div.lf_prices', 0)->find(' tr.even', 0)->find('td', 2)->plaintext,
+        "platinum" => $html->find('#content div.lf_prices', 0)->find(' tr.even', 0)->find('td', 5)->plaintext,
+        "palladium" => $html->find('#content div.lf_prices', 0)->find(' tr.even', 0)->find('td', 7)->plaintext,
+        "date" => $curtime
+    );
+
+    echo "<h4>Данные по АПИ НЕ получены или получены не все, получение данных парсингом...</h4>";
+    echo "<p>Золото: ".$stocks_array_parced["gold"]."</p>";
+    echo "<p>Серебро: ".$stocks_array_parced["silver"]."</p>";
+    echo "<p>Платина: ".$stocks_array_parced["platinum"]."</p>";
+    echo "<p>Паладий: ".$stocks_array_parced["palladium"]."</p>";
+    echo "<p>Время (Москва): ".$curtime."</p>";
+
+};
+
+?>
+
+
+
+<?php
+
+
+
+	//$parced_flag = 0;
 	
-	$parced_flag = 0;
-	
-	function get_parced_data($type, $parced_flag, $curtime)
+	/*function get_parced_data($type, $parced_flag, $curtime)
 	{
 	   $context = stream_context_create(
 		array(
@@ -180,61 +218,39 @@ include_once('simple_html_dom.php');
 				break;
 		}
 		
-	}
+	}*/
 
 ?>
 
-<p>Золото: <?=$stocks_array_parced["gold"]?></p>
-<p>Серебро: <?=$stocks_array_parced["silver"]?></p>
-<p>Платина: <?=$stocks_array_parced["platinum"]?></p>
-<p>Паладий: <?=$stocks_array_parced["palladium"]?></p>
-<p>Время (Москва): <?=$curtime?></p>
+
 
 
 <?php 
 /*Часть 4. Проверка и сбор данных*/
 
 if($api_stocks["gold"] > 2) {
- $selected_gold = $api_stocks["gold"];
+    $selected_gold = $api_stocks["gold"];
 } else {
-	if($stocks_array_parced["gold"] > 2){
-        $selected_gold = $stocks_array_parced["gold"];
-	} else {
-        $selected_gold = get_parced_data("gold", 0, $curtime);
-	}
+    $selected_gold =  $stocks_array_parced["gold"];
 }
 
-if($api_stocks["silver"] > 222112) {
+if($api_stocks["silver"] > 2) {
  $selected_silver = $api_stocks["silver"];
 } else {
-	echo $parced_flag;
-    if($stocks_array_parced["silver"] > 2){
-		$selected_silver = get_parced_data("silver", 0, $curtime);
-	} else {
-		$selected_silver = $stocks_array_parced["silver"];
-	}
+    $selected_silver = $stocks_array_parced["silver"];
 }
 
-if($api_stocks["platinum"] > 222112) {
+if($api_stocks["platinum"] > 2) {
  $selected_platinum = $api_stocks["platinum"];
 } else {
-	echo $parced_flag;
-	if($parced_flag == 0){
-		$selected_platinum = get_parced_data("platinum", $parced_flag, $curtime);
-	} else {
-		$selected_platinum = $stocks_array_parced["platinum"];
-	}
+    $selected_platinum = $stocks_array_parced["platinum"];
+
 }
 
-if($api_stocks["palladium"] > 222112) {
+if($api_stocks["palladium"] > 2) {
  $selected_palladium = $api_stocks["palladium"];
 } else {
-	echo $parced_flag;
-	if($parced_flag == 0){
-		$selected_palladium = get_parced_data("palladium", $parced_flag, $curtime);
-	} else {
-		$selected_palladium = $stocks_array_parced["palladium"];
-	}
+    $selected_palladium = $stocks_array_parced["palladium"];
 }
 
 ?>
@@ -260,7 +276,7 @@ $info = [
 // преобразовываем его в json вид
 $json = json_encode($info);
 // создаем новый файл
-$file = fopen('new.json', 'w');
+$file = fopen('today.json', 'w');
 // и записываем туда данные
 $write = fwrite($file,$json);
 // проверяем успешность выполнения операции
@@ -268,4 +284,6 @@ if($write) echo "Данные успешно записаны!<br>";
 else echo "Не удалось записать данные!<br>";
 //закрываем файл
 fclose($file);
-*/?>
+*/
+
+?>
