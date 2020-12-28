@@ -1,0 +1,9 @@
+{
+  "source_metals":"auto",
+  "source_stocks":"auto",
+  "today_file":"today.json",
+  "metals_msg_send":"1",
+  "stocks_msg_send": "0",
+  "global_update_time": "0600",
+  "next_update_date": "20201228"
+}
