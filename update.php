@@ -37,6 +37,9 @@ $message = 'Проблемы с курсами';
 $headers = 'From: webmaster@sxematika.ru' . "\r\n" .
     'X-Mailer: PHP/' . phpversion();
 
+
+$server_time = date("YmdHi");
+
 //Открываем файл с настройками
 // metal_api_1 или metal_api_2 или auto
 // source_stocks_1 или source_stocks_2 или auto
@@ -185,8 +188,6 @@ if($data1){ //глобальная проверка, открылся ли фа�
         $response2 = curl_exec($curl2);
         curl_close($curl2);
         $result2 = json_decode($response2, true);
-        // $curtime = date("YmdHi"); //московское время текущее
-        //$updatetime = date("Ymd").'0600'; //московское время обновления курса валют
         $metals_api1_array = array(
             "gold" => $result2["gold"]["pm"]["usd"],
             "silver" => $result2["silver"]["usd"],
@@ -284,7 +285,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
                 $real_source = "metals_api_2";
                 //отправляем письмо админу
                 $message = "Не доступны данные из источника metal_api_1. Данные взяты из источника metal_api_2";
-                if($send_message == "0"){
+                if($metals_msg_send == "0"){
                     mail($to, $subject, $message, $headers);
                     /*Обновление файла настроек*/
                     $jsonString = file_get_contents('settings.json');
@@ -497,7 +498,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
                 file_put_contents('stable.json', $newJsonString);
                 /***************/
 
-                if($send_message == "0"){
+                if($stocks_msg_send == "0"){
                     mail($to, $subject, $message, $headers);
 
                     /*Обновление файла настроек*/
@@ -559,7 +560,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
 
                 //отправляем письмо админу
                 $message = "Не доступен ни один из источников данных для металлов, данные взяты из stable.json";
-                if($send_message == "0"){
+                if($stocks_msg_send == "0"){
                     mail($to, $subject, $message, $headers);
 
                     /*Обновление файла настроек*/
@@ -577,11 +578,11 @@ if($data1){ //глобальная проверка, открылся ли фа�
         }
     }
 
-
-
-
-
-
+    $jsonString = file_get_contents($today_file);
+    $data = json_decode($jsonString, true);
+    $data['timestamp'] = $server_time;
+    $newJsonString = json_encode($data);
+    file_put_contents($today_file, $newJsonString);
 
 
 
@@ -683,7 +684,9 @@ echo round(((($metals["platinum"]*0.7*3) + ($metals["palladium"]*0.7*45))*$stock
 
 <?php
 
-$server_time = date("YmdHi");
+
+
+
 
 
 echo '<hr/>';
@@ -691,11 +694,11 @@ echo $server_time;
 echo '<hr/>';
 echo $next_update_date.$global_update_time;
 echo '<hr/>';
-$nextdate = strtotime($server_time);
-$nextdate = date('Ymd', $nextdate);
-echo $nextdate + 1;
+$time = strtotime("+1 day");
+$nextdate = date("Ymd", $time);
+echo $nextdate;
 echo '<hr/>';
-//проверяем больше ли время сервера, времени последнего суточного апдейта
+
 
 /***************/
 $tempArray = array(
@@ -709,28 +712,48 @@ $tempArray = array(
 );
 
 
-$jsonString = file_get_contents('log.json');
-$data = json_decode($jsonString, true);
+//$jsonString = file_get_contents('log.json');
+//$data = json_decode($jsonString, true);
 
-$data[] = $tempArray;
+//Данные для лога
+$data4[] = $tempArray;
+$newJsonString2 = json_encode($data4, JSON_PRETTY_PRINT);
 
-$newJsonString = json_encode($data);
-file_put_contents('stable.json', $newJsonString);
+//file_put_contents('log.json', $newJsonString);
+
+
+wh_log($newJsonString2); //функция логирования
 /***************/
-
+//проверяем больше ли время сервера, времени последнего суточного апдейта
 if(intval($server_time) > intval($next_update_date.$global_update_time)){
     echo "Обновляем всё<hr/>";
     //ежесуточный отчет админу
-    $subject = "Время сервера: ".$server_time." | Gold: ".$metals["gold"]." | Silver: ".$metals["silver"]." | Platinum: ".$metals["platinum"]." | Palladium: ".$metals["palladium"];
+    $subject = "Время сервера: ".$server_time." | Gold: ".$metals["gold"]." | Silver: ".$metals["silver"]." | Platinum: ".$metals["platinum"]." | Palladium: ".$metals["palladium"]." | RUB: ".$stocks["rub"]." | EUR: ".$stocks["eur"];
 
     message_to_telegram($subject);
 
     //обновляем следующую дату обновления
     $jsonString = file_get_contents('settings.json');
     $data = json_decode($jsonString, true);
-    $data['next_update_date'] = $nextdate+1;
+    $data['next_update_date'] = $nextdate;
+    $data['metals_msg_send'] = "0";
+    $data['stocks_msg_send'] = "0";
     $newJsonString = json_encode($data);
     file_put_contents('settings.json', $newJsonString);
+}
+
+//ежедневное логирование (в каждый файл по крону добавляется текущая информация по курсам)
+function wh_log($log_msg)
+{
+    $log_filename = "log";
+    if (!file_exists($log_filename))
+    {
+        // create directory/folder uploads.
+        mkdir($log_filename, 0777, true);
+    }
+    $log_file_data = $log_filename.'/log_' . date('d-M-Y') . '.log';
+
+    file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
 }
 
 ?>
