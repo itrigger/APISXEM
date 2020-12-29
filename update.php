@@ -113,7 +113,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
         $metals = $metals_api1_array;
         $real_source = $source_metals;
 
-        /*Обновление файла today.json*/
+        /*Обновление файла today.json
         $jsonString = file_get_contents($today_file);
         $data = json_decode($jsonString, true);
         $data['gold'] = $metals["gold"];
@@ -122,7 +122,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
         $data['palladium'] = $metals["palladium"];
         $newJsonString = json_encode($data);
         file_put_contents($today_file, $newJsonString);
-        /***************/
+
         $jsonString = file_get_contents('stable.json');
         $data = json_decode($jsonString, true);
         $data['gold'] = $metals["gold"];
@@ -155,7 +155,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
         $metals = $metals_api2_array;
         $real_source = $source_metals;
 
-        /*Обновление файла today.json*/
+        /*Обновление файла today.json
         $jsonString = file_get_contents($today_file);
         $data = json_decode($jsonString, true);
         $data['gold'] = $metals["gold"];
@@ -164,7 +164,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
         $data['palladium'] = $metals["palladium"];
         $newJsonString = json_encode($data);
         file_put_contents($today_file, $newJsonString);
-        /***************/
+
         $jsonString = file_get_contents('stable.json');
         $data = json_decode($jsonString, true);
         $data['gold'] = $metals["gold"];
@@ -268,7 +268,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
 
                     message_to_telegram('Не доступен ни один из источников данных для металлов, данные взяты из stable.json');
                 }
-                /*Обновление файла today.json*/
+                /*Обновление файла today.json
                 $jsonString = file_get_contents($today_file);
                 $data = json_decode($jsonString, true);
                 $data['gold'] = $metals["gold"];
@@ -297,7 +297,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
 
                     message_to_telegram('Не доступны данные из источника metal_api_1. Данные взяты из источника metal_api_2');
                 }
-                /*Обновление файла today.json*/
+                /*Обновление файла today.json
                 $jsonString = file_get_contents($today_file);
                 $data = json_decode($jsonString, true);
                 $data['gold'] = $metals["gold"];
@@ -306,7 +306,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
                 $data['palladium'] = $metals["palladium"];
                 $newJsonString = json_encode($data);
                 file_put_contents($today_file, $newJsonString);
-                /***************/
+
                 $jsonString = file_get_contents('stable.json');
                 $data = json_decode($jsonString, true);
                 $data['gold'] = $metals["gold"];
@@ -320,7 +320,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
         } else {
             $metals = $metals_api1_array;
             $real_source = "metals_api_1";
-            /*Обновление файла today.json*/
+            /*Обновление файла today.json
             $jsonString = file_get_contents($today_file);
             $data = json_decode($jsonString, true);
             $data['gold'] = $metals["gold"];
@@ -329,7 +329,7 @@ if($data1){ //глобальная проверка, открылся ли фа�
             $data['palladium'] = $metals["palladium"];
             $newJsonString = json_encode($data);
             file_put_contents($today_file, $newJsonString);
-            /***************/
+
             $jsonString = file_get_contents('stable.json');
             $data = json_decode($jsonString, true);
             $data['gold'] = $metals["gold"];
@@ -366,14 +366,14 @@ if($data1){ //глобальная проверка, открылся ли фа�
 
         $stocks = $exchange_array2;
 
-        /*Обновление файла*/
+        /*Обновление файла
         $jsonString = file_get_contents($today_file);
         $data = json_decode($jsonString, true);
         $data['rub'] = $stocks["rub"];
         $data['eur'] = $stocks["rub"];
         $newJsonString = json_encode($data);
         file_put_contents($today_file, $newJsonString);
-        /***************/
+
         $jsonString = file_get_contents('stable.json');
         $data = json_decode($jsonString, true);
         $data['rub'] = $stocks["rub"];
@@ -405,21 +405,21 @@ if($data1){ //глобальная проверка, открылся ли фа�
 
         $stocks = $exchange_array;
 
-        /*Обновление файла*/
+        /*Обновление файла
         $jsonString = file_get_contents($today_file);
         $data = json_decode($jsonString, true);
         $data['rub'] = $stocks["rub"];
         $data['eur'] = $stocks["rub"];
         $newJsonString = json_encode($data);
         file_put_contents($today_file, $newJsonString);
-        /***************/
+
         $jsonString = file_get_contents('stable.json');
         $data = json_decode($jsonString, true);
         $data['rub'] = $stocks["rub"];
         $data['eur'] = $stocks["rub"];
         $newJsonString = json_encode($data);
         file_put_contents('stable.json', $newJsonString);
-        /***************/
+        **************/
 
     } elseif ($source_stocks == "auto"){
         $url = 'https://api.exchangeratesapi.io/latest?base=USD&symbols=EUR,RUB';
@@ -443,21 +443,21 @@ if($data1){ //глобальная проверка, открылся ли фа�
             $stocks = $exchange_array2;
             $real_source2 = "stocks_api_1";
 
-            /*Обновление файла*/
+            /*Обновление файла
             $jsonString = file_get_contents($today_file);
             $data = json_decode($jsonString, true);
             $data['rub'] = $stocks["rub"];
             $data['eur'] = $stocks["eur"];
             $newJsonString = json_encode($data);
             file_put_contents($today_file, $newJsonString);
-            /***************/
+
             $jsonString = file_get_contents('stable.json');
             $data = json_decode($jsonString, true);
             $data['rub'] = $stocks["rub"];
             $data['eur'] = $stocks["eur"];
             $newJsonString = json_encode($data);
             file_put_contents('stable.json', $newJsonString);
-            /***************/
+            **************/
 
         } else {
             $url3 = 'https://openexchangerates.org/api/latest.json?app_id=a086cd9bbc274aa68a79c689aa3cb400&base=USD&symbols=RUB,EUR';
@@ -483,19 +483,19 @@ if($data1){ //глобальная проверка, открылся ли фа�
                 $real_source2 = "stocks_api_2";
 
                 /*Обновление файла*/
-                $jsonString = file_get_contents($today_file);
+               /* $jsonString = file_get_contents($today_file);
                 $data = json_decode($jsonString, true);
                 $data['rub'] = $stocks["rub"];
                 $data['eur'] = $stocks["eur"];
                 $newJsonString = json_encode($data);
                 file_put_contents($today_file, $newJsonString);
-                /***************/
+
                 $jsonString = file_get_contents('stable.json');
                 $data = json_decode($jsonString, true);
                 $data['rub'] = $stocks["rub"];
                 $data['eur'] = $stocks["eur"];
                 $newJsonString = json_encode($data);
-                file_put_contents('stable.json', $newJsonString);
+                file_put_contents('stable.json', $newJsonString);*/
                 /***************/
 
                 if($stocks_msg_send == "0"){
@@ -550,12 +550,12 @@ if($data1){ //глобальная проверка, открылся ли фа�
                 $real_source2 = "stable.json";
 
                 /*Обновление файла*/
-                $jsonString = file_get_contents($today_file);
+               /* $jsonString = file_get_contents($today_file);
                 $data = json_decode($jsonString, true);
                 $data['rub'] = $stocks["rub"];
                 $data['eur'] = $stocks["eur"];
                 $newJsonString = json_encode($data);
-                file_put_contents($today_file, $newJsonString);
+                file_put_contents($today_file, $newJsonString);*/
                 /***************/
 
                 //отправляем письмо админу
@@ -578,11 +578,11 @@ if($data1){ //глобальная проверка, открылся ли фа�
         }
     }
 
-    $jsonString = file_get_contents($today_file);
+/*    $jsonString = file_get_contents($today_file);
     $data = json_decode($jsonString, true);
     $data['timestamp'] = $server_time;
     $newJsonString = json_encode($data);
-    file_put_contents($today_file, $newJsonString);
+    file_put_contents($today_file, $newJsonString);*/
 
 
 
@@ -623,47 +623,6 @@ if($data1){ //глобальная проверка, открылся ли фа�
 6. Сделать интерфейс ручного ввода данных и функцию или метку, которая бы брала данные из таблицы ручного заполнения, а не АПИ
 */
 
-/*Часть 1. Загружаем данные из нашего файла today.json*/
-// Загружаем данные из файла в строку
-$string = file_get_contents("today.json");
-// Превращаем строку в объект
-$data = json_decode($string);
-// Отлавливаем ошибки возникшие при превращении
-switch (json_last_error()) {
-  case JSON_ERROR_NONE:
-    $data_error = '';
-    break;
-  case JSON_ERROR_DEPTH:
-    $data_error = 'Достигнута максимальная глубина стека';
-    break;
-  case JSON_ERROR_STATE_MISMATCH:
-    $data_error = 'Неверный или не корректный JSON';
-    break;
-  case JSON_ERROR_CTRL_CHAR:
-    $data_error = 'Ошибка управляющего символа, возможно верная кодировка';
-    break;
-  case JSON_ERROR_SYNTAX:
-    $data_error = 'Синтаксическая ошибка';
-    break;
-  case JSON_ERROR_UTF8:
-    $data_error = 'Некорректные символы UTF-8, возможно неверная кодировка';
-    break;  
-  default:
-    $data_error = 'Неизвестная ошибка';
-    break;
-}
-// Если ошибки есть, то выводим их
-if($data_error !='') echo $data_error;
-// Присваиваим данные переменным
-$old_gold = $data->gold;
-$old_silver = $data->silver;
-$old_platinum = $data->platinum;
-$old_palladium = $data->palladium;
-$old_rub = $data->rub;
-$old_eur = $data->eur;
-$old_timestamp = $data->timestamp;
-$old_moscowstamp = $data->moscowstamp;
-
 ?>
 
 
@@ -676,7 +635,7 @@ $old_moscowstamp = $data->moscowstamp;
 //3 пл + 45 пал
 //item_price = Math.round((item_gold * GOLD * GOLD_DISCOUNT + item_silver * SILVER * SILVER_DISCOUNT + item_platinum * PLATINUM * PLATINUM_DISCOUNT + item_palladium * PALLADIUM * PALLADIUM_DISCOUNT) * USD) * weight;
 
-echo round(((($metals["platinum"]*0.7*3) + ($metals["palladium"]*0.7*45))*$stocks["rub"])/31.1,2);
+echo round(((($metals["platinum"]*0.7*3) + ($metals["palladium"]*0.65*45))*$stocks["rub"])/31.1,2);
 ?>
 </span>
 </h1>
@@ -722,7 +681,7 @@ $newJsonString2 = json_encode($data4, JSON_PRETTY_PRINT);
 //file_put_contents('log.json', $newJsonString);
 
 
-wh_log($newJsonString2); //функция логирования
+
 /***************/
 //проверяем больше ли время сервера, времени последнего суточного апдейта
 if(intval($server_time) > intval($next_update_date.$global_update_time)){
@@ -740,6 +699,32 @@ if(intval($server_time) > intval($next_update_date.$global_update_time)){
     $data['stocks_msg_send'] = "0";
     $newJsonString = json_encode($data);
     file_put_contents('settings.json', $newJsonString);
+
+    $jsonString2 = file_get_contents($today_file);
+    $data2 = json_decode($jsonString2, true);
+    $data2['gold'] = $metals["gold"];
+    $data2['silver'] = $metals["silver"];
+    $data2['platinum'] = $metals["platinum"];
+    $data2['palladium'] = $metals["palladium"];
+    $data2['rub'] = $stocks["rub"];
+    $data2['eur'] = $stocks["rub"];
+    $data2['timestamp'] = $server_time;
+    $newJsonString2 = json_encode($data2);
+    file_put_contents($today_file, $newJsonString2);
+
+    $jsonString3 = file_get_contents('stable.json');
+    $data3 = json_decode($jsonString3, true);
+    $data3['gold'] = $metals["gold"];
+    $data3['silver'] = $metals["silver"];
+    $data3['platinum'] = $metals["platinum"];
+    $data3['palladium'] = $metals["palladium"];
+    $data3['rub'] = $stocks["rub"];
+    $data3['eur'] = $stocks["rub"];
+    $data3['timestamp'] = $server_time;
+    $newJsonString3 = json_encode($data3);
+    file_put_contents('stable.json', $newJsonString3);
+
+
 }
 
 //ежедневное логирование (в каждый файл по крону добавляется текущая информация по курсам)
@@ -748,13 +733,56 @@ function wh_log($log_msg)
     $log_filename = "log";
     if (!file_exists($log_filename))
     {
-        // create directory/folder uploads.
         mkdir($log_filename, 0777, true);
     }
     $log_file_data = $log_filename.'/log_' . date('d-M-Y') . '.log';
-
     file_put_contents($log_file_data, $log_msg . "\n", FILE_APPEND);
 }
+
+wh_log($newJsonString2); //функция логирования
+
+
+
+
+/*Часть 1. Загружаем данные из нашего файла today.json*/
+// Загружаем данные из файла в строку
+$string = file_get_contents("today.json");
+// Превращаем строку в объект
+$data = json_decode($string);
+// Отлавливаем ошибки возникшие при превращении
+switch (json_last_error()) {
+    case JSON_ERROR_NONE:
+        $data_error = '';
+        break;
+    case JSON_ERROR_DEPTH:
+        $data_error = 'Достигнута максимальная глубина стека';
+        break;
+    case JSON_ERROR_STATE_MISMATCH:
+        $data_error = 'Неверный или не корректный JSON';
+        break;
+    case JSON_ERROR_CTRL_CHAR:
+        $data_error = 'Ошибка управляющего символа, возможно верная кодировка';
+        break;
+    case JSON_ERROR_SYNTAX:
+        $data_error = 'Синтаксическая ошибка';
+        break;
+    case JSON_ERROR_UTF8:
+        $data_error = 'Некорректные символы UTF-8, возможно неверная кодировка';
+        break;
+    default:
+        $data_error = 'Неизвестная ошибка';
+        break;
+}
+// Если ошибки есть, то выводим их
+if($data_error !='') echo $data_error;
+// Присваиваим данные переменным
+$old_gold = $data->gold;
+$old_silver = $data->silver;
+$old_platinum = $data->platinum;
+$old_palladium = $data->palladium;
+$old_rub = $data->rub;
+$old_eur = $data->eur;
+$old_timestamp = $data->timestamp;
 
 ?>
 
@@ -766,8 +794,7 @@ function wh_log($log_msg)
 <p>Паладий: <?=$old_palladium?></p>
 <p>Курс руб: <?=$old_rub?></p>
 <p>Курс евро: <?=$old_eur?></p>
-<p>Время с АПИ: <?=$old_timestamp?></p>
-<p>Время обновления курса валюты по Москве: <?=$old_moscowstamp?></p>
+<p>Время: <?=$old_timestamp?></p>
 <hr>
 
 
