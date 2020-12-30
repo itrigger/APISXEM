@@ -707,7 +707,7 @@ if(intval($server_time) > intval($next_update_date.$global_update_time)){
     $data2['platinum'] = $metals["platinum"];
     $data2['palladium'] = $metals["palladium"];
     $data2['rub'] = $stocks["rub"];
-    $data2['eur'] = $stocks["rub"];
+    $data2['eur'] = $stocks["eur"];
     $data2['timestamp'] = $server_time;
     $newJsonString2 = json_encode($data2);
     file_put_contents($today_file, $newJsonString2);
@@ -719,7 +719,7 @@ if(intval($server_time) > intval($next_update_date.$global_update_time)){
     $data3['platinum'] = $metals["platinum"];
     $data3['palladium'] = $metals["palladium"];
     $data3['rub'] = $stocks["rub"];
-    $data3['eur'] = $stocks["rub"];
+    $data3['eur'] = $stocks["eur"];
     $data3['timestamp'] = $server_time;
     $newJsonString3 = json_encode($data3);
     file_put_contents('stable.json', $newJsonString3);
